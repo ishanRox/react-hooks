@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useState } from 'react';
+import React, { useReducer, useEffect, useState, useRef } from 'react';
 import './style.css';
 import axios from 'axios';
 
@@ -44,6 +44,15 @@ export default function App() {
   //benifit is u can easily test the reducer function and group similar state and logic
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  //useRef
+  // Updating a reference doesn't trigger re-rendering, while updating the state makes the component re-render so its great modify elements
+  // The reference update is synchronous (the updated reference value is available right away), while the state update is asynchronous (the state variable is updated after re-rendering).
+  const inputRef = useRef(null);
+  const onClearAndFocus = () => {
+    inputRef.current.value = '';
+    inputRef.current.focus();
+  };
+
   return (
     <div>
       <h1>Hello React Hooks !</h1>
@@ -66,8 +75,13 @@ export default function App() {
           dispatch({ type: 'AGE' });
         }}
       >
-        increase count{' '}
+        increase count
       </button>
+      <hr />
+      <h2>useRef</h2>
+      <input type="text" placeholder="focused here" ref={inputRef} />
+      <button onClick={onClearAndFocus}>Clear and focus</button>
+
       <hr />
     </div>
   );
