@@ -1,6 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import './style.css';
 import axios from 'axios';
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'NAME':
+      return { age: state.age, name: state.name + 's' };
+    case 'AGE':
+      return { age: state.age + 1, name: state.name };
+    default:
+      return state;
+  }
+};
+const initialState = { name: 'ishan', age: 26 };
 
 export default function App() {
   //https://reactjs.org/docs/hooks-reference.html
@@ -14,16 +26,24 @@ export default function App() {
   };
 
   //useEffect
-  const [data, setData] = useState();
+  //use useEffect. The function passed to useEffect will run after the render is committed to the screen. Think of effects as an escape hatch from //React’s purely functional world into the imperative world.
+  const [data, setData] = useState('');
 
   useEffect(() => {
+    console.log(Math.random());
     axios
       .get('https://jsonplaceholder.typicode.com/comments')
       .then((response) => {
         setData(response.data[0].email);
         console.log('API WAS CALLED');
-      });
+      }, []);
   });
+
+  //useReducer
+  //useReducer is an alternative to a complex useState and if you’ve used Redux in the past, this will look familiar.
+  //benifit is u can easily test the reducer function and group similar state and logic
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   return (
     <div>
       <h1>Hello React Hooks !</h1>
@@ -35,6 +55,19 @@ export default function App() {
 
       <h2>useEffect</h2>
       <p>data fetched by axios request : {data}</p>
+      <hr />
+      <h2>useReducer</h2>
+      <p>
+        name : {state.name} age :{state.age}
+      </p>
+      <button
+        onClick={(_) => {
+          dispatch({ type: 'NAME' });
+          dispatch({ type: 'AGE' });
+        }}
+      >
+        increase count{' '}
+      </button>
       <hr />
     </div>
   );
