@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useState, useRef } from 'react';
+import React, { useReducer, useEffect, useState, useRef ,useLayoutEffect} from 'react';
 import './style.css';
 import axios from 'axios';
 
@@ -53,6 +53,11 @@ export default function App() {
     inputRef.current.focus();
   };
 
+  //useEffect vs useLayoutEffect
+  //useEffect runs asynchronously and after a render is painted to the screen.
+  //useLayoutEffect, on the other hand, runs synchronously after a render(react call the component) but before the screen is updated(visualy visible)
+  useEffect(()=>{console.log('useEffect')},[])
+  useLayoutEffect(()=>{console.log('useLayoutEffect')},[])
   return (
     <div>
       <h1>Hello React Hooks !</h1>
