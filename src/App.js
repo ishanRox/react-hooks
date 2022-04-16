@@ -1,6 +1,7 @@
 import React, { useReducer, useEffect, useState, useRef ,useLayoutEffect} from 'react';
 import './style.css';
 import axios from 'axios';
+import Parent from '../components/parent.js';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -88,6 +89,7 @@ export default function App() {
       <button onClick={onClearAndFocus}>Clear and focus</button>
 
       <hr />
+      <Parent/>
     </div>
   );
 }
