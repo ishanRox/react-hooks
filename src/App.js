@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect, useState, useRef ,useLayoutEffect} from 'react';
 import './style.css';
 import axios from 'axios';
-import Parent from '../components/parent.js';
+import Parent from './components/parent';
 
 const reducer = (state, action) => {
   switch (action.type) {
