@@ -4,7 +4,11 @@ import axios from 'axios';
 import Parent from './components/useImperativeHandle/parent';
 import Login from './components/useContext/login';
 import User from './components/useContext/user';
+import { createContext } from 'react/cjs/react.production.min';
+//useContext create context
+export const AppContext = createContext(null);
 
+//useReducer reducer function
 const reducer = (state, action) => {
   switch (action.type) {
     case 'NAME':
@@ -15,6 +19,7 @@ const reducer = (state, action) => {
       return state;
   }
 };
+
 const initialState = { name: 'ishan', age: 26 };
 
 export default function App() {
@@ -101,7 +106,10 @@ export default function App() {
       <hr />
 
       <h2>useContextHook</h2>
-      <Login setUserName={setUserName} /><User userName={userName} />
+      {/* props way <Login setUserName={setUserName} /><User userName={userName} /> */}
+      <AppContext.Provider value={{ userName, setUserName }}>
+        <Login /><User />
+      </AppContext.Provider>
     </div>
   );
 }
