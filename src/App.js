@@ -1,7 +1,9 @@
-import React, { useReducer, useEffect, useState, useRef ,useLayoutEffect} from 'react';
+import React, { useReducer, useEffect, useState, useRef, useLayoutEffect } from 'react';
 import './style.css';
 import axios from 'axios';
-import Parent from './components/parent';
+import Parent from './components/useImperativeHandle/parent';
+import Login from './components/useContext/login';
+import User from './components/useContext/user';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -57,8 +59,13 @@ export default function App() {
   //useEffect vs useLayoutEffect
   //useEffect runs asynchronously and after a render is painted to the screen.
   //useLayoutEffect, on the other hand, runs synchronously after a render(react call the component) but before the screen is updated(visualy visible)
-  useEffect(()=>{console.log('useEffect')},[])
-  useLayoutEffect(()=>{console.log('useLayoutEffect')},[])
+  useEffect(() => { console.log('useEffect') }, []);
+  useLayoutEffect(() => { console.log('useLayoutEffect') }, []);
+
+  //useContext 
+  const [userName, setUserName] = useState('');
+
+
   return (
     <div>
       <h1>Hello React Hooks !</h1>
@@ -89,7 +96,12 @@ export default function App() {
       <button onClick={onClearAndFocus}>Clear and focus</button>
 
       <hr />
-      <Parent/>
+      <Parent />
+
+      <hr />
+
+      <h2>useContextHook</h2>
+      <Login setUserName={setUserName} /><User userName={userName} />
     </div>
   );
 }
